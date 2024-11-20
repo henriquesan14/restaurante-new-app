@@ -1,0 +1,149 @@
+
+@if(!loading){
+    <form [formGroup]="form" (submit)="submit()">
+    
+        <div class=" mb-2 box-avatar">
+            <!-- Avatar -->
+            <img ngbTooltip="Selecione uma imagem" #avatarImage id="avatar" [src]="avatarSelecionado" alt="Editar Avatar" (click)="fileInput.click()">
+            
+            <!-- Input de arquivo oculto -->
+            <input type="file" id="fileInput" #fileInput style="display: none;" (change)="onFileSelected($event)" accept="image/*">
+            @if(avatar && (avatar.urlLocal || avatar.url)){
+                <button (click)="deleteAvatar()" type="button" class="btn btn-sm btn-danger mt-2">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                    Remover
+                </button>
+            }
+        </div>
+    
+        <h4 class="mb-3">Dados Pessoais</h4>
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <label for="nome" class="form-label">Nome*</label>
+                <input maxlength="100" formControlName="nome" name="nome" type="text" class="form-control" id="nome"
+                    placeholder="Nome">
+                @if(isInvalidAndTouched('nome')){
+                <div class="invalid-feedback">
+                    O campo é obrigatório
+                </div>
+                }
+            </div>
+    
+            <div class="col-sm-6">
+                <label for="email" class="form-label">Email*</label>
+                <input maxlength="100" formControlName="email" name="email" type="email" class="form-control" id="email"
+                    placeholder="Email" autocomplete="true">
+                @if(isInvalidAndTouched('email')){
+                @if(getError('email', 'required')){
+                <div class="invalid-feedback">
+                    O campo é obrigatório
+                </div>
+                }
+                @if(getError('email', 'email')){
+                <div class="invalid-feedback">
+                    O campo tem ser um email válido
+                </div>
+                }
+                }
+            </div>
+        </div>
+    
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <label for="senha" class="form-label">{{usuarioId ? 'Nova senha' : 'Senha*'}}</label>
+                <input maxlength="100" formControlName="senha" name="senha" type="password" class="form-control" id="senha"
+                    placeholder="Senha" autocomplete="off">
+                @if(isInvalidAndTouched('senha')){
+                @if(getError('senha', 'required')){
+                <div class="invalid-feedback">
+                    O campo é obrigatório
+                </div>
+                }
+                @if(getError('senha', 'minlength')){
+                <div class="invalid-feedback">
+                    O campo tem que ter 6 caracteres
+                </div>
+                }
+                }
+            </div>
+    
+            <div class="col-sm-6">
+                <label for="confirmSenha" class="form-label">Confirmação de Senha*</label>
+                <input maxlength="100" formControlName="confirmSenha" name="confirmSenha" type="password"
+                    class="form-control" id="confirmSenha" placeholder="Confirmação de senha" autocomplete="off">
+                @if(isInvalidAndTouched('confirmSenha')){
+                @if(getError('confirmSenha', 'required')){
+                <div class="invalid-feedback">
+                    O campo é obrigatório
+                </div>
+                }
+                @if(getError('confirmSenha', 'notMatch')){
+                <div class="invalid-feedback">
+                    As senhas não conferem
+                </div>
+                }
+                }
+    
+            </div>
+        </div>
+    
+        <div class="row mb-1">
+            <div class="col-sm-4">
+                <label for="documento" class="form-label">CPF/CNPJ</label>
+                <input [mask]="mask"  (ngModelChange)="onInputChange()" maxlength="100" formControlName="documento" name="documento" type="text"
+                    class="form-control" id="documento" placeholder="CPF/CNPJ">
+                @if(isInvalidAndTouched('documento')){
+                    @if(getError('documento', 'minlength')){
+                        <div class="invalid-feedback">
+                            O campo precisa ter no minimo 11 caracteres
+                        </div>
+                    }
+                    @if(getError('documento', 'mask')){
+                        <div class="invalid-feedback">
+                            CPF/CNPJ inválido
+                        </div>
+                    }
+
+                }
+            </div>
+
+            <div class="col-sm-4">
+                <label for="telefone" class="form-label">Telefone*</label>
+                <input mask="(00) 00000-0000" maxlength="100" formControlName="telefone" name="telefone" type="text"
+                    class="form-control" id="telefone" placeholder="Telefone">
+                @if(isInvalidAndTouched('telefone')){
+                <div class="invalid-feedback">
+                    O campo é obrigatório
+                </div>
+                }
+            </div>
+    
+            <div class="col-sm-4">
+                <label for="grupoId" class="form-label">Grupo*</label>
+                <select formControlName="grupoId" name="grupoId" id="grupoId" class="form-select"
+                    aria-label="Default select example">
+                    <option disabled selected [value]="null">Selecione um grupo</option>
+                    @for(grupo of grupos; track grupo.id){
+                    <option [value]="grupo.id">{{grupo.nome}}</option>
+                    }
+                </select>
+                @if(isInvalidAndTouched('grupoId')){
+                <div class="invalid-feedback">
+                    O campo é obrigatório
+                </div>
+                }
+            </div>
+        </div>
+    
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                @if(usuarioId){
+                    <btn-cadastrar hasRole="EDITAR_USUARIO" [title]="'Atualizar'"></btn-cadastrar>
+                }@else{
+                    <btn-cadastrar hasRole="CADASTRAR_USUARIO" [title]="'Cadastrar'"></btn-cadastrar>
+                }
+            </div>
+        </div>
+    </form>
+    <ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>
+}

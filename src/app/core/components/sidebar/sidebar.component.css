@@ -1,0 +1,63 @@
+nav ul {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+}
+
+.menu-aside {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-aside #logo {
+  margin: 20px auto;
+  width: 150px;
+}
+
+nav ul li{
+  cursor: pointer;
+  padding: 8px;
+}
+
+nav ul li:hover{
+  background-color: #20a8d8;
+}
+
+nav ul li i{
+  color: #fff;
+}
+
+nav ul li span:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+nav ul li span{
+  font-size: 0.875rem;
+      color: #fff;
+      text-decoration: none;
+      margin-left: 10px;
+
+}
+
+nav ul li span i{
+  font-size: 0.75rem;
+        color: #73818f;
+}
+
+.active{
+  background-color: #3a4248;
+}
+
+.active i{
+  color: #20a8d8;
+}
+
+.menu {
+  grid-area: menu;
+  background-color: #2f353a;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100%;
+}

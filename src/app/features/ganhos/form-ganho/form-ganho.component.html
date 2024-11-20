@@ -1,0 +1,81 @@
+
+@if(!loading){
+    <form [formGroup]="form" (submit)="submit()">
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <label for="fonte" class="form-label">Fonte*</label>
+                <select formControlName="fonte" name="fonte" id="fonte" class="form-select">
+                    <option disabled selected [value]="null">Selecione uma fonte</option>
+                    <option value="HONORARIOS">Honorários</option>
+                    <option value="SERVICOS">Serviços</option>
+                    <option value="JUROS">Juros</option>
+                    <option value="OUTROS">Outros</option>
+                </select>
+                @if(isInvalidAndTouched('fonte')){
+                    <div class="invalid-feedback">
+                        O campo é obrigatório
+                    </div>
+                }
+            </div>
+    
+            <div class="col-sm-6">
+                <label for="valor" class="form-label">Valor*</label>
+                <input mask="separator.2" 
+                prefix="R$ "
+                [dropSpecialCharacters]="false"  formControlName="valor" name="valor" type="valor" class="form-control" id="valor">
+                    @if(isInvalidAndTouched('valor')){
+                        <div class="invalid-feedback">
+                            O campo é obrigatório
+                        </div>
+                    }
+            </div>
+        </div>
+    
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <label for="tipo" class="form-label">Status*</label>
+                <select formControlName="status" name="status" id="status" class="form-select">
+                    <option disabled selected [value]="null">Selecione um status</option>
+                    <option value="PENDENTE">Pendente</option>
+                    <option value="PAGO">Pago</option>
+                    <option value="AGUARDANDO">Aguardando</option>
+                    <option value="RECEBIDO">Recebido</option>
+                </select>
+                @if(isInvalidAndTouched('status')){
+                    <div class="invalid-feedback">
+                        O campo é obrigatório
+                    </div>
+                }
+            </div>
+
+            <div class="col-sm-6">
+                <label for="dataRecebimento" class="form-label">Data de recebimento*</label>
+                <input formControlName="dataRecebimento" name="dataRecebimento" type="date" class="form-control" id="dataRecebimento">
+                    @if(isInvalidAndTouched('dataRecebimento')){
+                        <div class="invalid-feedback">
+                            O campo é obrigatório
+                        </div>
+                    }
+            </div>
+            
+        </div>
+    
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <label for="nroProcesso" class="form-label">Processo</label>
+                <input mask="0000000.00.0000.0.00.0000" id="nroProcesso" name="nroProcesso" formControlName="nroProcesso" placeholder="N. Processo" class="form-control" type="text" />
+            </div>      
+        </div>
+    
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                @if(ganhoId){
+                    <btn-cadastrar hasRole="EDITAR_GANHO" [title]="'Atualizar'"></btn-cadastrar>
+                }@else{
+                    <btn-cadastrar hasRole="CADASTRAR_GANHO" [title]="'Cadastrar'"></btn-cadastrar>
+                }
+            </div>
+        </div>
+    </form>
+    <ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>
+}

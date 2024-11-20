@@ -1,0 +1,26 @@
+<div class="flex">
+    <div class="user-dropdown">
+      <div class="user-button">
+        <span class="d-none d-sm-block">{{nomeUsuario}}</span>
+        <div class="user-dropdown-img">
+          <app-avatar-usuario></app-avatar-usuario>
+          <fa-icon [icon]="faAngleDown" class="seta ms-2"></fa-icon>
+        </div>
+        <i class="fa fa-angle-down"></i>
+      </div>
+      <div class="user-dropdown-content">
+        <a  routerLink="/app/profile">
+          <fa-icon class="me-1"  [icon]="faUser"></fa-icon>Atualizar perfil
+        </a>
+        <a  routerLink="/app/profile/update-password">
+          <fa-icon class="me-1"  [icon]="faKey"></fa-icon>Alterar senha
+        </a>
+        <a hasRole="CADASTRAR_USUARIO" routerLink="/app/usuarios">
+          <fa-icon class="me-1" [icon]="faCogs"></fa-icon>Administração
+        </a>
+        <a  (click)="logout()">
+          <i class="fa fa-sign-out"></i>Sair
+        </a>
+      </div>
+    </div>
+</div>

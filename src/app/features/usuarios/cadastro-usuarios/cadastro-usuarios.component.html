@@ -1,0 +1,13 @@
+<h4 class="card-header text-center">Cadastro de Usuários</h4>
+<div class="container">
+    <main>
+        <div class="row g-5">
+            <div class="col-md-12">
+                <btn-novo hasRole="CADASTRAR_USUARIO" title="Novo grupo" (clickEvent)="openNovoGrupo()"></btn-novo>
+                <app-form-usuario (submitEvent)="submit($event)"></app-form-usuario>
+                <btn-voltar></btn-voltar>
+            </div>
+        </div>
+    </main>
+</div>
+<ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>

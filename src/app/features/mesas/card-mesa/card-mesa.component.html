@@ -1,0 +1,36 @@
+<div class="card-mesa" [ngClass]="{
+        'livre': mesa.status === 'AVAILABLE', 
+        'ocupada': mesa.status === 'BUSY', 
+        'reservada': mesa.status === 'RESERVED'
+     }">
+    <div class="card-header">
+        <h5>Mesa {{ mesa.name }}
+            <button ngbTooltip="Editar" (click)="editarMesa()" class="btn btn-info btn-sm">
+                <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+        </h5>
+        
+    </div>
+    <div class="card-body">
+        <p>Capacidade: {{ mesa.capacity }} pessoas</p>
+        <p>Status: <span>{{ mesa.status }}</span></p>
+        <fa-icon class="icon-status" [icon]="getIcon(mesa.status)"></fa-icon>
+    </div>
+    <div class="card-footer">
+        @if(mesa.status === 'AVAILABLE'){
+        <button class="btn btn-danger btn-sm me-1" (click)="ocuparMesa(mesa.id)">Ocupar
+            <fa-icon [icon]="faBan"></fa-icon>
+        </button>
+        <button class="btn btn-warning btn-sm" (click)="reservarMesa(mesa.id)">Reservar
+            <fa-icon [icon]="faCalendarCheck"></fa-icon>
+        </button>
+        }@else{
+        <button class="btn btn-success btn-sm" (click)="liberarMesa(mesa.id)">Liberar
+            <fa-icon [icon]="faCheck"></fa-icon>
+        </button>
+        }
+
+
+
+    </div>
+</div>

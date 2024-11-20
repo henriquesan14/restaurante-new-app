@@ -1,0 +1,108 @@
+<h4 class="card-header text-center">Dashboard</h4>
+<div class="container">
+  
+  <form [formGroup]="formFiltro">
+    <div class="row mb-2">
+      <div class="col-sm-4">
+        <label for="mes" class="form-label">Mês</label>
+        <select formControlName="mes" (change)="onChangeFiltro()" name="mes" id="mes" class="form-select">
+          <option selected [value]="''">Todos</option>
+          @for(mes of barChartLabels; track $index){
+            <option [value]="mes">{{mes}}</option>
+          }
+      </select>
+      </div>
+      <div class="col-sm-4">
+        <label for="ano" class="form-label">Ano</label>
+        <select formControlName="ano" (change)="onChangeFiltro()"name="ano" id="ano" class="form-select">
+          <option disabled [value]="''">Selecione um ano</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+      </select>
+      </div>
+    </div>
+  </form>
+
+  <div class="row mb-4">
+    <div class="col-sm-4">
+      <div class="card text-white bg-primary p-3 d-flex flex-row align-items-center">
+        <div class="left me-5">
+          <fa-icon [icon]="faArrowUp" class="fa-3x"></fa-icon>
+        </div>
+        <div class="right text-right">
+          <h4>Ganhos</h4>
+          <h5>{{summary.totalGanhos | currency: 'BRL'}}</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="card text-white bg-danger p-3 d-flex flex-row align-items-center">
+        <div class="left me-5">
+          <fa-icon [icon]="faArrowDown" class="fa-3x"></fa-icon>
+        </div>
+        <div class="right text-right">
+          <h4>Despesas</h4>
+          <h5>{{summary.totalDespesas | currency: 'BRL'}}</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="card text-white p-3 d-flex flex-row align-items-center" [ngClass]="{
+        'bg-secondary': summary.saldo == null,
+        'bg-success': summary.saldo > 0,
+        'bg-danger': summary.saldo < 0,
+        'bg-warning': summary.saldo === 0
+      }">
+        <div class="left me-5">
+          <fa-icon [icon]="getIcon()" class="fa-3x"></fa-icon>
+        </div>
+        <div class="right text-right">
+          <h4>Saldo</h4>
+          <h5>{{summary.saldo | currency: 'BRL'}}</h5>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row mb-2">
+    <div class="col-sm-6">
+      <div class="card">
+        <h4 class="card-header text-center">Ganhos/Despesas Mensais</h4>
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+          [legend]="barChartLegend" [type]="'bar'"></canvas>
+      </div>
+    </div>
+
+    <div class="col-sm-3 d-flex justify-content-center">
+      <div class="card" style="width: 350px;">
+        <h4 class="card-header text-center">Despesas por Categoria</h4>
+        @if(statisticsByType.despesasPorTipo && statisticsByType.despesasPorTipo.length > 0){
+          <canvas baseChart [datasets]="doughnutChartData" [labels]="doughnutChartLabels" [type]="'doughnut'"></canvas>
+        }@else {
+          <span class="p-2">Não há dados disponiveis</span>
+        }
+      </div>
+    </div>
+
+    <div class="col-sm-3  d-flex justify-content-center">
+      <div class="card" style="width: 350px;">
+        <h4 class="card-header text-center">Ganhos por Categoria</h4>
+        @if(statisticsByType.despesasPorTipo && statisticsByType.despesasPorTipo.length > 0){
+          <canvas baseChart [datasets]="doughnutChartData2" [labels]="doughnutChartLabels2" [type]="'doughnut'"></canvas>
+        }@else {
+          <span class="p-2">Não há dados disponiveis</span>
+        }
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+  </div>
+</div>

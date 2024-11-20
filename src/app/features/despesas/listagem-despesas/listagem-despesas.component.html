@@ -1,0 +1,106 @@
+<h4 class="card-header text-center">Despesas</h4>
+<div class="container">
+    
+    <btn-novo hasRole="CADASTRAR_DESPESA" (clickEvent)="novaDespesa()" title="Nova Despesa" ></btn-novo>
+    <form [formGroup]="filtroForm" (submit)="getDespesas()">
+        <div class="mb-3 row">
+            <div class="col-md-3 col-sm-auto">
+                <label for="tipo">Tipo</label>
+                <select formControlName="tipo" name="tipo" id="tipo" class="form-select">
+                    <option selected [value]="''">Todos</option>
+                    <option value="ALUGUEL">Aluguel</option>
+                    <option value="PAGAMENTO_FUNCIONARIO">Pagamento funcionário</option>
+                    <option value="CONTAS">Contas</option>
+                    <option value="MATERIAL_ESCRITORIO">Material escritório</option>
+                    <option value="MARKETING">Marketing</option>
+                    <option value="VIAGEM">Viagem</option>
+                    <option value="OUTROS">Outros</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 col-sm-auto">
+                <label for="status">Status</label>
+                <select formControlName="status" name="status" id="status" class="form-select">
+                    <option selected [value]="''">Todos</option>
+                    <option value="PENDENTE">Pendente</option>
+                    <option value="PAGO">Pago</option>
+                    <option value="AGUARDANDO">Aguardando</option>
+                    <option value="RECEBIDO">Recebido</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <btn-pesquisar></btn-pesquisar>
+                <btn-limpar (clickEvent)="limpar()"></btn-limpar>
+            </div>
+        </div>
+    </form>
+    <div class="mb-2 mt-1">
+        <span>{{despesas.length}} despesas encontradas.</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Data de vencimento</th>
+                    <th>Data de pagamento</th>
+                    <th>Status</th>
+                    <th>Processo</th>
+                    <th>Obs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (despesa of despesas; track despesa.id) {
+                    <tr>
+                        <td>
+                            {{ despesa.tipo }}
+                        </td>
+                        <td>
+                            {{ despesa.valor | currency: 'BRL' }}
+                        </td>
+                        <td>
+                            {{ despesa.dataVencimento | date : 'dd/MM/yyyy'}}
+                            @if(despesa.status != 'PAGO' && getVencimentoStatus(despesa.dataVencimento) < 0){
+                                <fa-icon ngbTooltip="Atrasado" class="text-danger" [icon]="faExclamationCircle"></fa-icon>
+                            }
+                            @if(despesa.status != 'PAGO' && getVencimentoStatus(despesa.dataVencimento) >= 0 && getVencimentoStatus(despesa.dataVencimento) < 8){
+                                <fa-icon ngbTooltip="Vencimento próximo" class="text-warning" [icon]="faExclamationTriangle"></fa-icon>
+                            }
+                        </td>
+                        <td>
+                            {{ despesa.dataPagamento ? (despesa.dataPagamento | date: 'dd/MM/yyyy') : 'N/A' }}
+                          </td>
+                          <td>
+                            <span [ngClass]="getStatusBadgeClass(despesa.status)">
+                              {{ despesa.status }}
+                            </span>
+                          </td>
+                        <td>
+                            {{ despesa.processo ? (despesa.processo.nroProcesso! | nroProcesso) : 'N/A' }}
+                        </td>
+                        <td>
+                            {{ getTextoReduzido(despesa.observacoes)}}
+                        </td>
+                        
+                        <td style="white-space:nowrap;">
+                            <button [disabled]="despesa.dataPagamento || despesa.status == 'PAGO'" hasRole="EDITAR_DESPESA" (click)="pagarDespesa(despesa.id)" ngbTooltip="Pagar" class="btn btn-primary btn-sm me-1">
+                                <fa-icon [icon]="faCheck">
+                                </fa-icon>
+                            </button>
+                            <button hasRole="LISTAR_DESPESA" (click)="visualizarDespesa(despesa.id)" ngbTooltip="Visualizar" class="btn btn-info btn-sm me-1">
+                                <fa-icon [icon]="faEye">
+                                </fa-icon>
+                            </button>
+                            <button hasRole="EXCLUIR_DESPESA" (click)="deleteDespesa(despesa.id)" ngbTooltip="Excluir" class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="faTrash"></fa-icon>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

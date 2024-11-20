@@ -1,0 +1,75 @@
+<h4 class="card-header text-center">Alterar senha</h4>
+<div class="container">
+    <main>
+        <div class="row g-5">
+            <div class="col-md-12">
+                <form [formGroup]="formUpdatePassword" (submit)="submit()">
+                    <div class="row mb-1">
+                        <div class="col-sm-6">
+                            <label for="senhaAtual" class="form-label">Senha atual</label>
+                            <input maxlength="100" formControlName="senhaAtual" name="senhaAtual" type="password"
+                                class="form-control" id="confirmSenha" placeholder="Senha atual" autocomplete="off">
+                            @if(isInvalidAndTouched('senhaAtual')){
+                            @if(getError('senhaAtual', 'required')){
+                            <div class="invalid-feedback">
+                                O campo é obrigatório
+                            </div>
+                            }
+                            }
+                
+                        </div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-sm-6">
+                            <label for="senha" class="form-label">Nova senha</label>
+                            <input maxlength="100" formControlName="senha" name="senha" type="password" class="form-control" id="senha"
+                                placeholder="Senha" autocomplete="off">
+                            @if(isInvalidAndTouched('senha')){
+                            @if(getError('senha', 'required')){
+                            <div class="invalid-feedback">
+                                O campo é obrigatório
+                            </div>
+                            }
+                            @if(getError('senha', 'minlength')){
+                            <div class="invalid-feedback">
+                                O campo tem que ter 6 caracteres
+                            </div>
+                            }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row mb-1">
+                        <div class="col-sm-6">
+                            <label for="confirmSenha" class="form-label">Confirmação de Senha</label>
+                            <input maxlength="100" formControlName="confirmSenha" name="confirmSenha" type="password"
+                                class="form-control" id="confirmSenha" placeholder="Confirmação de senha" autocomplete="off">
+                            @if(isInvalidAndTouched('confirmSenha')){
+                            @if(getError('confirmSenha', 'required')){
+                            <div class="invalid-feedback">
+                                O campo é obrigatório
+                            </div>
+                            }
+                            @if(getError('confirmSenha', 'notMatch')){
+                            <div class="invalid-feedback">
+                                As senhas não conferem
+                            </div>
+                            }
+                            }
+                
+                        </div>
+                    </div>
+                
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <btn-cadastrar title="Atualizar senha"></btn-cadastrar>
+                        </div>
+                    </div>
+                </form>
+                <btn-voltar></btn-voltar>
+            </div>
+        </div>
+    </main>
+</div>
+<ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>

@@ -1,0 +1,64 @@
+@if(!loading){
+    <div class="modal-header">
+        <h4 class="modal-title text-center">Cobranças</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+    </div>
+    
+    <div class="modal-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Data criação</th>
+                    <th>Data vencimento</th>
+                    <th>Valor</th>
+                    <th>Valor líquido</th>
+                    <th>Tipo</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(cobranca of asaasResponse.data; track $index ){
+                    <tr>
+                        <td >
+                            {{cobranca.dateCreated | date: 'dd/MM/yyyy'}}
+                        </td>
+                        <td>{{cobranca.dueDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{cobranca.value | currency: 'BRL'}}</td>
+                        <td>{{cobranca.netValue | currency: 'BRL'}}</td>
+                        <td>{{cobranca.billingType}}</td>
+                        <td>
+                            <span
+                                [ngClass]="getStatusBadgeClass(cobranca.status)">
+                                {{ cobranca.status }}
+                            </span>
+                        </td>
+                        <td style="white-space:nowrap;">
+                            <button (click)="openInvoiceInNewTab(cobranca.invoiceUrl)" ngbTooltip="Visualizar"
+                                class="btn btn btn-info btn-sm me-1">
+                                <fa-icon [icon]="faEye"></fa-icon>
+                            </button>
+                            <button (click)="deleteCobranca(cobranca.id)" hasRole="EXCLUIR_COBRANCA" ngbTooltip="Excluir"
+                                class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="faTrash"></fa-icon>
+                            </button>
+                        </td>
+                    </tr>
+                }@empty {
+                    <span>Não há nenhuma cobrança</span>
+                }
+    
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between align-items-center p-2">
+            <ngb-pagination
+                [collectionSize]="asaasResponse.totalCount"
+                [(page)]="asaasResponse.offset"
+                [pageSize]="asaasResponse.limit"
+                (pageChange)="getCobrancas()"
+            >
+            </ngb-pagination>
+        </div>
+    </div>
+}
+
+<ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>

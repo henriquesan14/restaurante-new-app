@@ -1,0 +1,52 @@
+.content {
+  grid-area: content;
+  background-color: #e4e5e6;
+  padding: 20px;
+}
+
+
+::ng-deep .container{
+  padding: 20px 20px;
+}
+
+#authenticated{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 55px 1fr 30px;
+  grid-template-columns: 200px 1fr;
+  grid-template-areas:
+    "header header"
+    "menu content"
+    "menu footer";
+}
+
+app-footer {
+  grid-area: footer;
+}
+
+app-header{
+  grid-area: header;
+}
+
+app-sidebar{
+  grid-area: menu;
+}
+
+.authenticated-hide-menu {
+  grid-template-areas:
+    "header header"
+    "content content"
+    "footer footer" !important;
+  grid-template-columns: 200px 1fr !important;
+}
+
+::ng-deep .hide-menu .menu {
+  display: none !important;
+}
+
+
+
+
+

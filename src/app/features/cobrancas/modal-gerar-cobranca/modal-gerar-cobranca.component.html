@@ -1,0 +1,79 @@
+<div class="modal-header">
+    <h4 class="modal-title text-center">Gerar cobrança</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="form" (submit)="submit()">
+
+        <div class="row mb-1">
+            <div class="col-sm-4">
+                <label for="billingType" class="form-label">Tipo Pagamento*</label>
+                <select formControlName="billingType" name="billingType" id="billingType" class="form-select">
+                    <option disabled selected [value]="null">Selecione um tipo</option>
+                    <option value="BOLETO">Boleto</option>
+                    <option value="PIX">Pix</option>
+                    <option value="CREDIT_CARD">Cartão de crédito</option>
+                </select>
+                @if(isInvalidAndTouched('billingType')){
+                <div class="invalid-feedback">
+                    O campo é obrigatório
+                </div>
+                }
+            </div>
+
+            <div class="col-sm-4">
+                <label for="value" class="form-label">Valor*</label>
+                <input (input)="updateInstallments()" mask="separator.2" prefix="R$ " [dropSpecialCharacters]="false" formControlName="value"
+                    name="value" type="value" class="form-control" id="value">
+                @if(isInvalidAndTouched('value')){
+                <div class="invalid-feedback">
+                    O campo é obrigatório
+                </div>
+                }
+            </div>
+
+            <div class="col-sm-4">
+                <label for="dueDate" class="form-label">Data de vencimento*</label>
+                <input formControlName="dueDate" name="dueDate" type="date" class="form-control" id="dueDate">
+                @if(isInvalidAndTouched('dueDate')){
+                <div class="invalid-feedback">
+                    O campo é obrigatório
+                </div>
+                }
+            </div>
+        </div>
+
+        @if(form.value.billingType == 'CREDIT_CARD' && form.value.value){
+            <div class="row mb-1">
+                <div class="col-sm-6">
+                    <label for="installmentCount" class="form-label">Parcelas*</label>
+                    <select formControlName="installmentCount" name="installmentCount" id="installmentCount" class="form-select">
+                        @for(option of installmentOptions; track $index){
+                            <option [value]="option.count">
+                                {{ option.text }}
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="description" class="form-label">Descrição</label>
+                <textarea rows="6" formControlName="description" name="description" type="text" class="form-control"
+                    id="description" placeholder="Descrição"></textarea>
+            </div>
+
+        </div>
+
+        <div class="row mt-3" hasRole="CADASTRAR_COBRANCA">
+            <div class="col-sm-12">
+                <btn-cadastrar [title]="'Cadastrar'"></btn-cadastrar>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>

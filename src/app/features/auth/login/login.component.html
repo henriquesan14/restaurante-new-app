@@ -1,0 +1,49 @@
+<div class="container-login">
+    <div class="box-login">
+        <div class="box-left">
+            <img id="logo" src="assets/images/logo.png" alt="">
+            <h3>Restaurante App</h3>
+        </div>
+        <div class="box-right">
+            <h3>Insira suas credenciais</h3>
+            <form [formGroup]="loginForm" (submit)="onSubmit()">
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <input formControlName="email" placeholder="Email" type="text" autocomplete="on" maxlength="100">
+                    </div>
+                    @if(isInvalidAndTouched('email')){
+                        
+                        @if(getError('email', 'required')){
+                            <div class="invalid-feedback">
+                                O campo é obrigatório
+                            </div>
+                        }
+                        
+                        @if(getError('email', 'email')){
+                            <div class="invalid-feedback">
+                                O campo tem ser um email válido
+                            </div>
+                        } 
+                    }
+                </div>
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <input formControlName="password" placeholder="Senha" type="password" autocomplete="off">
+                    </div>
+                    @if(isInvalidAndTouched('password')){
+                        <div class="invalid-feedback">
+                            O campo é obrigatório
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit">Entrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>

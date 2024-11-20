@@ -1,0 +1,58 @@
+<form [formGroup]="formGrupo" (submit)="submit()">
+    <div class="row mb-2">
+        <div class="col-sm-12">
+            <label for="nome" class="form-label">Nome*</label>
+            <input formControlName="nome" maxlength="50" name="nome" type="text" class="form-control"
+                id="nome" placeholder="Nome">
+                @if(isInvalidAndTouched('nome')){
+                    <div class="invalid-feedback">
+                        O campo é obrigatório
+                    </div>
+                }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-check">
+                <input formControlName="sobAprovacao" name="sobAprovacao"
+                    type="checkbox" class="form-check-input" id="sobAprovacao">
+                <label class="form-check-label" for="sobAprovacao">Sob Aprovação</label>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <h4>Permissões*</h4>
+    
+    <div class="mb-2">
+        <button hasRole="CADASTRAR_GRUPO" (click)="selecionarTudo()" type="button" class="btn btn-primary btn-sm me-1">Selecionar todos</button>
+        <button hasRole="CADASTRAR_GRUPO" (click)="desmarcarTudo()" type="button" class="btn btn-primary btn-sm">Desmarcar todos</button>
+    </div>
+    <div class="box-permissoes">
+        @for(categoria of permissoes; track categoria.categoriaPermissao){
+            
+            <div class="permissao">
+                <h5>{{ categoria.categoriaPermissao }}</h5>
+                @for(permissao of categoria.permissoes; track permissao.id){
+                    <div >
+                        <input [formControlName]="permissao.id" class="me-1" type="checkbox" [id]="permissao.id" name="permissao{{ permissao.id }}">
+                        <label [for]="permissao.id">{{ permissao.nome }}</label>
+                    </div>
+                }
+            </div>
+            <hr>
+        }
+    </div>
+    
+    <div class="row mt-3">
+        <div class="col-sm-12">
+            @if(grupoId){
+                <btn-cadastrar hasRole="EDITAR_GRUPO" [title]="'Atualizar'"></btn-cadastrar>
+            }@else{
+                <btn-cadastrar hasRole="CADASTRAR_GRUPO" [title]="'Cadastrar'"></btn-cadastrar>
+            }
+        </div>
+    </div>
+</form>

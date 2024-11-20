@@ -1,0 +1,42 @@
+.card-mesa {
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.card-mesa .card-header {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-mesa .card-body p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.card-mesa .card-footer {
+    margin-top: 8px;
+}
+
+.card-mesa.livre {
+    background-color: #d4edda; /* Verde claro */
+    color: #155724;
+}
+
+.card-mesa.ocupada {
+    background-color: #f8d7da; /* Vermelho claro */
+    color: #721c24;
+}
+
+.card-mesa.reservada {
+    background-color: #fff3cd; /* Amarelo claro */
+    color: #856404;
+}
+
+.icon-status{
+    font-size: 20px;
+}

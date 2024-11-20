@@ -1,0 +1,12 @@
+<h4 class="card-header text-center">Edição de Despesas</h4>
+<div class="container">
+    <main>
+        <div class="row g-5">
+            <div class="col-md-12">
+                <app-form-despesa [despesaId]="despesaId" (submitEvent)="submit($event)"></app-form-despesa>
+                <btn-voltar></btn-voltar>
+            </div>
+        </div>
+    </main>
+</div>
+<ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>

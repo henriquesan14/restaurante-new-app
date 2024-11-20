@@ -1,0 +1,12 @@
+<div id="authenticated" [ngClass]="{ 'authenticated-hide-menu': menuHidden}">
+  <app-sidebar (toggleMenuEvent)="toggleMenuNavigate()" [ngClass]="{ 'hide-menu': menuHidden, 'show-menu': !menuHidden }"></app-sidebar>
+  <app-header (toggleMenuEvent)="toggleMenu()"></app-header>
+  
+  <div class="content">
+    <div class="card">
+      <router-outlet></router-outlet>
+    </div>
+    
+  </div>
+  <app-footer></app-footer>
+</div>

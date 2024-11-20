@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <h4 class="modal-title text-center">Cadastro de Grupos</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+    <app-form-grupo (submitEvent)="cadastrarGrupo($event)"></app-form-grupo>
+</div>
+
+<ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>

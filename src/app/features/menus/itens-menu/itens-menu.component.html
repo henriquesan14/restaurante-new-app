@@ -1,0 +1,63 @@
+<h4 class="card-header text-center">Adicionar Itens ao Menu</h4>
+<div class="container">
+    <div class="mb-3">
+        <h5>Menu: {{ menu.name }}</h5>
+        <p>Adicione itens ao menu abaixo.</p>
+    </div>
+
+    <form [formGroup]="itemForm" (submit)="addItem()">
+        <div class="mb-3 row">
+            <div class="col-md-6 col-sm-auto">
+                <label for="itemName">Nome do Item</label>
+                <input formControlName="name" id="itemName" placeholder="Nome do Item" class="form-control" type="text">
+            </div>
+            <div class="col-md-6 col-sm-auto">
+                <label for="itemPrice">Preço</label>
+                <input formControlName="price" id="itemPrice" placeholder="Preço" class="form-control" type="number">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-md-12">
+                <label for="itemDescription">Descrição</label>
+                <textarea formControlName="description" id="itemDescription" placeholder="Descrição do Item" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <btn-novo title="Adicionar"></btn-novo>
+                <btn-limpar (clickEvent)="limparItemForm()"></btn-limpar>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive mt-4">
+        <h5>Itens do Menu</h5>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(item of menuItems; track item.id){
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.price | currency: 'BRL' }}</td>
+                        <td>{{ item.description }}</td>
+                        <td style="white-space: nowrap;">
+                            <button (click)="editItem(item)" class="btn btn-info btn-sm me-1">
+                                <fa-icon [icon]="faEdit"></fa-icon>
+                            </button>
+                            <button (click)="removeItem(item.id)" class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="faTrash"></fa-icon>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+
+@if(!loading){
+    <form [formGroup]="form" (submit)="submit()">
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <label for="tipo" class="form-label">Tipo*</label>
+                <select formControlName="tipo" name="tipo" id="tipo" class="form-select">
+                    <option disabled selected [value]="null">Selecione um tipo</option>
+                    <option value="ALUGUEL">Aluguel</option>
+                    <option value="PAGAMENTO_FUNCIONARIO">Pagamento funcionário</option>
+                    <option value="CONTAS">Contas</option>
+                    <option value="MATERIAL_ESCRITORIO">Material escritório</option>
+                    <option value="MARKETING">Marketing</option>
+                    <option value="VIAGEM">Viagem</option>
+                    <option value="OUTROS">Outros</option>
+                </select>
+                @if(isInvalidAndTouched('tipo')){
+                    <div class="invalid-feedback">
+                        O campo é obrigatório
+                    </div>
+                }
+            </div>
+    
+            <div class="col-sm-6">
+                <label for="valor" class="form-label">Valor*</label>
+                <input mask="separator.2" 
+                prefix="R$ "
+                [dropSpecialCharacters]="false"  formControlName="valor" name="valor" type="valor" class="form-control" id="valor">
+                    @if(isInvalidAndTouched('valor')){
+                        <div class="invalid-feedback">
+                            O campo é obrigatório
+                        </div>
+                    }
+            </div>
+        </div>
+    
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <label for="dataVencimento" class="form-label">Data de vencimento*</label>
+                <input formControlName="dataVencimento" name="dataVencimento" type="date" class="form-control" id="dataVencimento">
+                    @if(isInvalidAndTouched('dataVencimento')){
+                        <div class="invalid-feedback">
+                            O campo é obrigatório
+                        </div>
+                    }
+            </div>
+
+            <div class="col-sm-6">
+                <label for="dataPagamento" class="form-label">Data de pagamento</label>
+                <input formControlName="dataPagamento" name="dataPagamento" type="date" class="form-control" id="dataPagamento">
+            </div>
+    
+            
+        </div>
+    
+        <div class="row mb-1">
+            <div class="col-sm-6">
+                <label for="tipo" class="form-label">Status*</label>
+                <select formControlName="status" name="status" id="status" class="form-select">
+                    <option disabled selected [value]="null">Selecione um status</option>
+                    <option value="PENDENTE">Pendente</option>
+                    <option value="PAGO">Pago</option>
+                    <option value="AGUARDANDO">Aguardando</option>
+                    <option value="RECEBIDO">Recebido</option>
+                </select>
+                @if(isInvalidAndTouched('status')){
+                    <div class="invalid-feedback">
+                        O campo é obrigatório
+                    </div>
+                }
+            </div>
+
+            <div class="col-sm-6">
+                <label for="nroProcesso" class="form-label">Processo</label>
+                <input mask="0000000.00.0000.0.00.0000" id="nroProcesso" name="nroProcesso" formControlName="nroProcesso" placeholder="N. Processo" class="form-control" type="text" />
+            </div>      
+        </div>
+
+        <div class="row-mb-1">
+            <div class="col-sm-6">
+                <label for="observacoes" class="form-label">Observações</label>
+                <textarea  rows="6" formControlName="observacoes" name="observacoes" type="text"
+                    class="form-control" id="observacoes" placeholder="observacoes"></textarea>
+            </div>  
+        </div>
+    
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                @if(despesaId){
+                    <btn-cadastrar hasRole="EDITAR_DESPESA" [title]="'Atualizar'"></btn-cadastrar>
+                }@else{
+                    <btn-cadastrar hasRole="CADASTRAR_DESPESA" [title]="'Cadastrar'"></btn-cadastrar>
+                }
+            </div>
+        </div>
+    </form>
+    <ngx-spinner type="ball-clip-rotate-multiple"></ngx-spinner>
+}

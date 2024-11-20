@@ -1,0 +1,19 @@
+<aside class="menu">
+  <nav class="menu-aside">
+    <img id="logo" src="assets/images/logo.png" alt="">
+    <ul>
+
+      @for(item of activeItems; track $index){
+      <li [hasRole]="item.role" [routerLinkActiveOptions]="{exact:
+              true}" (click)="navigate(item.path)" routerLinkActive="active">
+        <span>
+          <fa-icon class="me-1" [icon]="item.icon">
+          </fa-icon>
+          {{item.text}}
+        </span>
+      </li>
+      }
+
+    </ul>
+  </nav>
+</aside>

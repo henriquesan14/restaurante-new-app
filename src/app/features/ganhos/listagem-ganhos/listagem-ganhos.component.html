@@ -1,0 +1,91 @@
+<h4 class="card-header text-center">Ganhos</h4>
+<div class="container">
+    
+    <btn-novo hasRole="CADASTRAR_GANHO" (clickEvent)="novoGanho()" title="Novo Ganho" ></btn-novo>
+    <form [formGroup]="filtroForm" (submit)="getGanhos()">
+        <div class="mb-3 row">
+            <div class="col-md-3 col-sm-auto">
+                <label for="fonte">Fonte</label>
+                <select formControlName="fonte" name="fonte" id="fonte" class="form-select">
+                    <option selected [value]="''">Todos</option>
+                    <option value="HONORARIOS">Honorários</option>
+                    <option value="SERVICOS">Serviços</option>
+                    <option value="JUROS">Juros</option>
+                    <option value="OUTROS">Outros</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 col-sm-auto">
+                <label for="status">Status</label>
+                <select formControlName="status" name="status" id="status" class="form-select">
+                    <option selected [value]="''">Todos</option>
+                    <option value="PENDENTE">Pendente</option>
+                    <option value="PAGO">Pago</option>
+                    <option value="AGUARDANDO">Aguardando</option>
+                    <option value="RECEBIDO">Recebido</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <btn-pesquisar></btn-pesquisar>
+                <btn-limpar (clickEvent)="limpar()"></btn-limpar>
+            </div>
+        </div>
+    </form>
+    <div class="mb-2 mt-1">
+        <span>{{ganhos.length}} ganhos encontrados.</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Fonte</th>
+                    <th>Valor</th>
+                    <th>Data de recebimento</th>
+                    <th>Status</th>
+                    <th>Processo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (ganho of ganhos; track ganho.id) {
+                    <tr>
+                        <td>
+                            {{ ganho.fonte }}
+                        </td>
+                        <td>
+                            {{ ganho.valor | currency: 'BRL' }}
+                        </td>
+                        <td>
+                            {{ ganho.dataRecebimento | date : 'dd/MM/yyyy'}}
+                            @if(ganho.status != 'PAGO' && getRecebimentoStatus(ganho.dataRecebimento) < 0){
+                                <fa-icon ngbTooltip="Atrasado" class="text-danger" [icon]="faExclamationCircle"></fa-icon>
+                            }
+                            @if(ganho.status != 'PAGO' && getRecebimentoStatus(ganho.dataRecebimento) >= 0 && getRecebimentoStatus(ganho.dataRecebimento) < 8){
+                                <fa-icon ngbTooltip="Recebimento próximo" class="text-warning" [icon]="faExclamationTriangle"></fa-icon>
+                            }
+                        </td>
+                          <td>
+                            <span [ngClass]="getStatusBadgeClass(ganho.status)">
+                              {{ ganho.status }}
+                            </span>
+                          </td>
+                        <td>
+                            {{ ganho.processo ? (ganho.processo.nroProcesso! | nroProcesso) : 'N/A' }}
+                        </td>
+                        
+                        <td style="white-space:nowrap;">
+                            <button hasRole="LISTAR_GANHO" (click)="visualizarGanho(ganho.id)" ngbTooltip="Visualizar" class="btn btn-info btn-sm me-1">
+                                <fa-icon [icon]="faEye">
+                                </fa-icon>
+                            </button>
+                            <button hasRole="EXCLUIR_GANHO" (click)="deleteGanho(ganho.id)" ngbTooltip="Excluir" class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="faTrash"></fa-icon>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
